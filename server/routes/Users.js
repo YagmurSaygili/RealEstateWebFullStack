@@ -15,26 +15,31 @@ router.post("/", async (req, res) => {
   });
 });
 
-router.post("/login", async (req, res) => {
+router.post("/login", async (req, res) => { // Problem Solved
   const { username, password } = req.body;
-  const user = await Users.findOne({ where: { username: username } });
-  if (!user) {
-    res.json({ error: "There is no User with that Username" });
-   } // If such user does not exist with the given username
-  // We cannot unhash the password we just hashed  but we can hash original password and compare them to see if matching happens
 
-  bcrypt.compare(password, user.password).then((match) => { // Incase not match, server crashed
+  try {
+    const user = await Users.findOne({ where: { username: username } });
 
-    if (!match){
-        // There is a problem I dont know why, when program comes here
-        // It instantly crashes with password null sort of error
-        //TODO: Will
-        res.json({ error: "Wrong Username and Password Combination" });
-    } 
-    
+    // If user doesn't exist, stop execution and send an error response
+    if (!user) {
+      return res.json({ error: "User Doesn't Exist" });
+    }
 
-    res.json("YOU LOGGED IN");
-  } ,[]);
+    const match = await bcrypt.compare(password, user.password);
+
+    // If password doesn't match, stop execution and send an error response
+    if (!match) {
+      return res.json({ error: "Wrong Username And Password Combination" });
+    }
+
+    // If execution reaches here, login is successful
+    res.json("YOU LOGGED IN!!!");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("An internal error occurred");
+  }
 });
 
 module.exports = router;
+
