@@ -42,7 +42,7 @@ router.post("/login", async (req, res) => {
       { username: user.username, id: user.id },
       "importantsecret"
     );
-
+      console.log("Does it come here ?")
     res.json(accessToken);
   } catch (error) {
     console.error(error);
