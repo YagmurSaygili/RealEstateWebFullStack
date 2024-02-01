@@ -38,7 +38,7 @@ function Property() {
           alert(Response.data.error);
         } else {
           // Adding comment , authentication success
-          const commentToAdd = { commentBody: newComment };
+          const commentToAdd = { commentBody: newComment , username : Response.data.username};
           setComments([...comments, commentToAdd]);
           setNewComment("");
         }
@@ -73,6 +73,7 @@ function Property() {
             return (
               <div key={key} className="comment">
                 {comment.commentBody}
+                <label>Username: {comment.username}</label>
               </div>
             );
           })}
