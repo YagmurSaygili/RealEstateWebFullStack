@@ -3,6 +3,8 @@ const router = express.Router();
 const { Users } = require("../models");
 const bcrypt = require("bcrypt");
 
+const { sign } = require("jsonwebtoken");
+
 router.post("/", async (req, res) => {
   const { username, password } = req.body;
   bcrypt.hash(password, 10).then((hash) => {
@@ -15,7 +17,8 @@ router.post("/", async (req, res) => {
   });
 });
 
-router.post("/login", async (req, res) => { // Problem Solved
+router.post("/login", async (req, res) => {
+  // Problem Solved
   const { username, password } = req.body;
 
   try {
@@ -27,14 +30,20 @@ router.post("/login", async (req, res) => { // Problem Solved
     }
 
     const match = await bcrypt.compare(password, user.password);
-
+    // Await and async ???
     // If password doesn't match, stop execution and send an error response
     if (!match) {
       return res.json({ error: "Wrong Username And Password Combination" });
     }
 
     // If execution reaches here, login is successful
-    res.json("YOU LOGGED IN!!!");
+
+    const accessToken = sign(
+      { username: user.username, id: user.id },
+      "importantsecret"
+    );
+
+    res.json(accessToken);
   } catch (error) {
     console.error(error);
     res.status(500).send("An internal error occurred");
@@ -42,4 +51,3 @@ router.post("/login", async (req, res) => { // Problem Solved
 });
 
 module.exports = router;
-

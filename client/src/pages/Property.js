@@ -14,9 +14,17 @@ function Property() {
         setPropertyObject(Response.data);
       });
 
-    axios.get(`http://localhost:3001/comments/${id}`).then((Response) => {
-      setComments(Response.data);
-    });
+    axios.get(`http://localhost:3001/comments/${id}`).then(
+      (Response) => {
+        setComments(Response.data);
+      },
+      {
+        Headers: {
+          // Passing access token in headers
+          accessToken: sessionStorage.getItem("accessToken"),
+        },
+      }
+    );
   }, [id]); // Infınıte loop burdan oluyormyş [] koymadım diye, a lot of API requests without it
   const addComment = () => {
     axios
@@ -25,9 +33,15 @@ function Property() {
         PropertyId: id,
       })
       .then((Response) => {
-        const commentToAdd = { commentBody: newComment };
-        setComments([...comments, commentToAdd]);
-        setNewComment("");
+        if (Response.data.error) { // To make sure comment not added in case user is not authenticated
+          alert(Response.data.error);
+        } else { // Adding comment , authentication success
+          const commentToAdd = { commentBody: newComment };
+          setComments([...comments, commentToAdd]);
+          setNewComment("");
+        }
+        // Although it already does not store comment in database, this if else logic was needed
+        // in order to avoid adding comment in the UI after the user submits comment
       });
   };
   return (
