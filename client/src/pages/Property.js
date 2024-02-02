@@ -14,29 +14,33 @@ function Property() {
         setPropertyObject(Response.data);
       });
 
-    axios.get(`http://localhost:3001/comments/${id}`).then(
-      (Response) => {
-        setComments(Response.data);
-      },
-      {
-        Headers: {
-          // Passing access token in headers
-          accessToken: sessionStorage.getItem("accessToken"),
-        },
-      }
-    );
+    axios.get(`http://localhost:3001/comments/${id}`).then((Response) => {
+      setComments(Response.data);
+    });
   }, [id]); // Infınıte loop burdan oluyormyş [] koymadım diye, a lot of API requests without it
   const addComment = () => {
     axios
-      .post("http://localhost:3001/comments", {
+      .post("http://localhost:3001/comments", 
+      {
         commentBody: newComment,
         PropertyId: id,
-      })
+      },
+      {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      }
+      )
       .then((Response) => {
-        if (Response.data.error) { // To make sure comment not added in case user is not authenticated
-          alert(Response.data.error);
-        } else { // Adding comment , authentication success
-          const commentToAdd = { commentBody: newComment };
+        if (Response.data.error) {
+          // To make sure comment not added in case user is not authenticated
+          console.log(Response.data.error)
+        } else {
+          // Adding comment , authentication success
+          const commentToAdd = {
+            commentBody: newComment,
+            username: Response.data.username,
+          };
           setComments([...comments, commentToAdd]);
           setNewComment("");
         }
@@ -71,6 +75,7 @@ function Property() {
             return (
               <div key={key} className="comment">
                 {comment.commentBody}
+                <label> from Username: {comment.username}</label>
               </div>
             );
           })}

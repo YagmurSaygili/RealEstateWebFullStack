@@ -16,9 +16,9 @@ router.get('/byId/:id', async (req, res) => {
 
 router.post("/", async (req, res) => {
   // Inserting data logic
-  const post = req.body;
-  await Properties.create(post);
-  res.json(post);
+  const property = req.body;
+  await Properties.create(property);
+  res.json(property);
 });
 
 module.exports = router;
