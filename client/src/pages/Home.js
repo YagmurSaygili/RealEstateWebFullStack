@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom"; // These are called hooks
 import { FaThumbsUp } from "react-icons/fa";
 import { AuthContext } from "../helpers/AuthContext";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 function Home() {
-  const [likedProperties, setLikedProperty] = useState([]);
+  const [likedProperties, setLikedProperties] = useState([]);
   const [listOfProperties, setListOfProperties] = useState([]);
   let history = useHistory();
   const authState = useContext(AuthContext);
@@ -22,7 +23,7 @@ function Home() {
         })
         .then((Response) => {
           setListOfProperties(Response.data.listOfProperties);
-          setLikedProperty(
+          setLikedProperties(
             Response.data.likedProperties.map((like) => {
               return like.PropertyId;
             })
@@ -55,13 +56,13 @@ function Home() {
           })
         );
         if (likedProperties.includes(propertyId)) {
-          setLikedProperty(
+          setLikedProperties(
             likedProperties.filter((id) => {
               return id !== propertyId;
             })
           );
         } else {
-          setLikedProperty([...likedProperties, propertyId]);
+          setLikedProperties([...likedProperties, propertyId]);
         }
       })
       .catch((error) => {
@@ -84,18 +85,22 @@ function Home() {
               {value.propertyText}
             </div>
             <div className="footer">
-              <div> {value.username} </div>
+              <div className="username">
+                <Link to={`/profile/${value.UserId}`}>{value.username}</Link>
+              </div>
               <div className="buttons">
-              {value.username}{" "}
-              <FaThumbsUp
-                onClick={() => {
-                  likeAProperty(value.id);
-                }}
-                className={
-                  likedProperties.includes(value.id) ? "unlikeBttn" : "likeBttn"
-                }
-              />
-              <label> {value.Likes.length}</label>
+                {/* {value.username}{" "} */}
+                <FaThumbsUp
+                  onClick={() => {
+                    likeAProperty(value.id);
+                  }}
+                  className={
+                    likedProperties.includes(value.id)
+                      ? "unlikeBttn"
+                      : "likeBttn"
+                  }
+                />
+                <label> {value.Likes.length}</label>
               </div>
             </div>
           </div>

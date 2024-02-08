@@ -7,6 +7,7 @@ import Property from "./pages/Property";
 import Login from "./pages/Login";
 
 import Registration from "./pages/Registration";
+import Profile from "./pages/Profile";
 import { AuthContext } from "./helpers/AuthContext";
 
 import { useState, useEffect } from "react";
@@ -78,6 +79,7 @@ function App() {
             <Route path="/createproperty" exact component={CreateProperty} />
             <Route path="/property/:id" exact component={Property} />
             <Route path="/login" exact component={Login} />
+            <Route path="/profile/:id" exact component={Profile} />
             <Route path="/registration" exact component={Registration} />
             <Route path="*" exact component={PageNotFound} />
           </Switch>
