@@ -56,6 +56,30 @@ body {
   border-bottom-right-radius: 10px;
 }
 
+.footer .username {
+  flex: 50%;
+}
+.footer .buttons {
+  flex: 50%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.likeBttn {
+  color: rgba(250, 250, 250, 0.8);
+}
+.unlikeBttn {
+  color: white;
+}
+
+.buttons label {
+  margin-right: 20px;
+  margin-left: 10px;
+}
+
+
+
 /* CREATE POST PAGE CSS */
 
 .createPropertyPage {
@@ -106,6 +130,8 @@ span {
 }
 
 /* NAVBAR */
+
+
 .navbar {
   width: 100%;
   height: 70px;
@@ -115,11 +141,39 @@ span {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.navbar .links {
+  flex: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.navbar .loggedInContainer {
+  flex: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.navbar h1 {
+  text-align: right;
+  margin-right: 10px;
+  color: white;
+  font-weight: lighter;
+}
 .navbar a {
   margin-left: 20px;
   text-decoration: none;
   color: white;
 }
+
+.navbar button {
+  width:150px;
+  height: 40px;
+  cursor:pointer
+}
+
 
 /* INDIVIDUAL POST */
 .propertyPage {
@@ -143,19 +197,6 @@ span {
   place-items: center;
 }
 
-#individual {
-  height: 500px;
-  width: 600px;
-}
-
-#individual .title,
-#individual .footer {
-  font-size: 30px;
-}
-
-#individual .body {
-  font-size: 25px;
-}
 
 .rightSide .addCommentContainer {
   flex: 20%;
@@ -197,6 +238,20 @@ button {
   border: 1px solid lightgray;
   border-radius: 5px;
   margin-top: 20px;
+}
+
+#individual {
+  height: 500px;
+  width: 600px;
+}
+
+#individual .title,
+#individual .footer {
+  font-size: 30px;
+}
+
+#individual .body {
+  font-size: 25px;
 }
 
 /* LOGIN */

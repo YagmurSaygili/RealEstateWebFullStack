@@ -4,8 +4,7 @@ const validateToken = (req, res, next) => {
   const accessToken = req.header("accessToken");
 
   if (!accessToken) {
-    console.log("Server/AuthMiddleware --> says ...");
-    return res.json({ error: "User not logged in!" });
+    return res.json({ error: "User not logged in" });
   }
 
   try {
@@ -13,7 +12,7 @@ const validateToken = (req, res, next) => {
     req.user = validToken;
     if (validToken) {
       console.log("Server/AuthMiddleware , the valid token check -->")
-      return next(); // What does this do
+      return next();
     }
   } catch (err) {
     return res.json({ error: err });

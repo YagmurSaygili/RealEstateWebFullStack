@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import {AuthContext} from "../helpers/AuthContext";
+import { AuthContext } from "../helpers/AuthContext";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -17,8 +17,8 @@ function Login() {
         alert(Response.data.error);
       } else {
         console.log("Login Successfull!!");
-        localStorage.setItem("accessToken", Response.data);
-        setAuthState(true);
+        localStorage.setItem("accessToken", Response.data.token);
+        setAuthState({ username: Response.data.username, id: Response.data.id, status: true });
         history.push("/"); // Pushin to the home page works but because of the problem I have beforewhich manually refreshing ...
       }
     });

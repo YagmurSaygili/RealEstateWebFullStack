@@ -43,7 +43,7 @@ router.post("/login", async (req, res) => {
       "importantsecret"
     );
     console.log("Does it come here ?");
-    res.json(accessToken);
+    res.json({ token: accessToken, username: username, id: user.id });
   } catch (error) {
     console.error(error);
     res.status(500).send("An internal error occurred");
@@ -51,6 +51,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/auth", validateToken, (req, res) => {
+  // console.log("Does it come here ?"); --> No
   res.json(req.user);
 });
 
