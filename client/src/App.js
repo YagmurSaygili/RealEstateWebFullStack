@@ -1,18 +1,21 @@
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Home from "./pages/Home";
 
+import Home from "./pages/Home";
 import CreateProperty from "./pages/CreateProperty";
 import Property from "./pages/Property";
 import Login from "./pages/Login";
 
+import ChangePassword from "./pages/ChangePassword";
 import Registration from "./pages/Registration";
 import Profile from "./pages/Profile";
-import { AuthContext } from "./helpers/AuthContext";
+import PageNotFound from "./pages/PageNotFound";
 
+
+import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import PageNotFound from "./pages/PageNotFound";
+
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -80,6 +83,7 @@ function App() {
             <Route path="/property/:id" exact component={Property} />
             <Route path="/login" exact component={Login} />
             <Route path="/profile/:id" exact component={Profile} />
+            <Route path="/changepassword" exact component={ChangePassword} />
             <Route path="/registration" exact component={Registration} />
             <Route path="*" exact component={PageNotFound} />
           </Switch>

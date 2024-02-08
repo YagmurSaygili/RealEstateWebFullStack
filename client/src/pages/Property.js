@@ -85,14 +85,65 @@ function Property() {
       });
   };
 
+  const editPost = (option) => {
+    if (option === "title") {
+      let newTitle = prompt("Enter New Title:");
+      axios.put(
+        "http://localhost:3001/properties/title",
+        {
+          newTitle: newTitle,
+          id: id,
+        },
+        {
+          headers: { accessToken: localStorage.getItem("accessToken") },
+        }
+      );
+
+      setPropertyObject({ ...propertyObject, title: newTitle });
+    } else {
+      let newPropertyText = prompt("Enter New Text:");
+      axios.put(
+        "http://localhost:3001/properties/propertyText",
+        {
+          newText: newPropertyText,
+          id: id,
+        },
+        {
+          headers: { accessToken: localStorage.getItem("accessToken") },
+        }
+      );
+
+      setPropertyObject({ ...propertyObject, propertyText: newPropertyText });
+    }
+  };
+
+
   return (
     <div className="propertyPage">
       <div className="leftSide">
         <div className="property" id="individual">
-          <div className="title">{propertyObject.title}</div>
-          <div className="body">{propertyObject.propertyText}</div>
+        <div
+            className="title"
+            onClick={() => {
+              if (authState.username === propertyObject.username) {
+                editPost("title");
+              }
+            }}
+          >
+            {propertyObject.title}
+          </div>
+          <div
+            className="body"
+            onClick={() => {
+              if (authState.username === propertyObject.username) {
+                editPost("body");
+              }
+            }}
+          >
+            {propertyObject.propertyText}
+          </div>
           <div className="footer">
-          {propertyObject.username}
+            {propertyObject.username}
             {authState.username === propertyObject.username && (
               <button
                 onClick={() => {
@@ -101,7 +152,7 @@ function Property() {
               >
                 {" "}
                 Delete Post
-              </button> // Button not appearing ??
+              </button>
             )}
           </div>
         </div>

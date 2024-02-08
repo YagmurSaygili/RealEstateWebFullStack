@@ -42,8 +42,22 @@ router.post("/", validateToken, async (req, res) => {
 });
 //What above router does is that it creates a new property and sends it as a response to the client.
 
-router.delete("/:id", validateToken, async (req, res) => {
-  const propertyId = req.params.id;
+router.put("/title", validateToken, async (req, res) => {
+  const { id, newTitle } = req.body;
+  await Properties.update({ title: newTitle }, { where: { id: id } });
+  res.json(newTitle);
+});
+//What above router does is that it updates the title of the property by its id and sends it as a response to the client.
+
+router.put("/propertyText", validateToken, async (req, res) => {
+  const { id, newText } = req.body;
+  await Properties.update({ propertyText: newText }, { where: { id: id } });
+  res.json(newText);
+});
+//What above router does is that it updates the property text of the property by its id and sends it as a response to the client.
+
+router.delete("/:propertyId", validateToken, async (req, res) => {
+  const propertyId = req.params.propertyId;
   await Properties.destroy({
     where: {
       id: propertyId,
