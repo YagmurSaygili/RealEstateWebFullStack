@@ -1,16 +1,16 @@
-import React, { useContext } from "react";
+import React, { } from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom"; // These are called hooks
 import { FaThumbsUp } from "react-icons/fa";
-import { AuthContext } from "../helpers/AuthContext";
+// import { AuthContext } from "../helpers/AuthContext";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 function Home() {
   const [likedProperties, setLikedProperties] = useState([]);
   const [listOfProperties, setListOfProperties] = useState([]);
   let history = useHistory();
-  const authState = useContext(AuthContext);
+  // const authState = useContext(AuthContext);
 
   useEffect(() => {
     //Check if the user is logged in
@@ -30,6 +30,7 @@ function Home() {
           );
         });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const likeAProperty = (propertyId) => {
