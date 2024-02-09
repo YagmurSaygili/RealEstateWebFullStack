@@ -1,12 +1,12 @@
-import React, { useContext, useEffect } from "react";
+import React, {  useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import { AuthContext } from "../helpers/AuthContext";
+// import { AuthContext } from "../helpers/AuthContext";
 
 function CreateProperty() {
-  const { authState } = useContext(AuthContext);
+  // const { authState } = useContext(AuthContext);
   let history = useHistory();
   const initialValues = {
     title: "",
@@ -18,6 +18,7 @@ function CreateProperty() {
     if (!localStorage.getItem("accessToken")) {
       history.push("/login");
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const validationSchema = Yup.object().shape({

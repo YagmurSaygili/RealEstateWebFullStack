@@ -18,6 +18,7 @@ function Profile() {
     axios.get(`http://localhost:3001/properties/byuserId/${id}`).then((response) => {
       setListOfProperties(response.data);
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

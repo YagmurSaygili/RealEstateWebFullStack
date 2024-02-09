@@ -21,6 +21,7 @@ function Property() {
     axios.get(`http://localhost:3001/comments/${id}`).then((Response) => {
       setComments(Response.data);
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Infınıte loop burdan oluyormyş [] koymadım diye, a lot of API requests without it
 
   const addComment = () => {
